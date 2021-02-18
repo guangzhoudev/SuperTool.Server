@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <ApplicationIcon />
+    <OutputType>Library</OutputType>
+    <StartupObject />
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\VOL.Core\VOL.Core.csproj" />
+    <ProjectReference Include="..\VOL.Entity\VOL.Entity.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="IRepositories\Appointment\" />
+    <Folder Include="IRepositories\spt\" />
+    <Folder Include="IServices\Appointment\Partial\" />
+    <Folder Include="Repositories\spt\" />
+    <Folder Include="Services\Appointment\Partial\" />
+    <Folder Include="Services\spt\Partial\" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,20 @@
+前端采用Vue开发，需要提前安装node.js
+
+运行环境: node.js 
+安装包： https://nodejs.org/en/download/
+检查是否安装：node -v
+
+前端Vue项目路径 ../VOL.Vue ，  
+执行npm install命令
+接着执行npm run dev 命令 【需要先运行后台Api】
+
+后端使用 VS 2019 打开项目直接运行，或者进入路径  ../VOL.WebApi，找到dev_run.bat命令点击启动
+
+项目启动报错/登陆页面报错
+1、登陆页面一直登陆中不跳转：数据库连接没配置好,在appsettings.json中重新配置，或者可以调试查看具体错误，后台调试方法见文档：【后台开发】->【调试】
+2、登陆页面【网络出了点问题】：检查浏览器控制台是否有异常输出跨域问题；数据库连接没配置，见上面第一步
+3、项目启动报错：.netcore.xxx表不存在(手动将数据库表改成大写开头,与代码的Model大小写一致即可)
+4、项目启动报错：点击登陆提示网络出错(如果是mysql数据库，请确认appsettings.json配置中DBType是否改为了MySql)
+5、项目启动报错：后台控制台提示不支持allowPublicKeyRetrieval(见上面appsettings.json配置中DBType是否改为了MySql，数据库字符串配置去掉此属性)
+6、如果修改了前端启动端口(默认8080)，同时需要修改后台appsettings.json配置属性CorsUrls跨域
+7、如果修改了后台端口(默认9991,在后台Program.cs中配置)，同时需要修改前端http.js配置development对应url
