@@ -98,6 +98,18 @@ let viewgird = [
         path: '/TaskRecord',
         name: 'TaskRecord',
         component: () => import('@/views/order/TaskRecord.vue')
+    }    ,{
+        path: '/Shop',
+        name: 'Shop',
+        component: () => import('@/views/order/Shop.vue')
+    }    ,{
+        path: '/Article',
+        name: 'Article',
+        component: () => import('@/views/order/Article.vue')
+    }    ,{
+        path: '/Extend',
+        name: 'Extend',
+        component: () => import('@/views/order/Extend.vue')
     }]
 
 export default viewgird

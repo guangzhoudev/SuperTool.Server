@@ -7,6 +7,7 @@
 前端Vue项目路径 ../VOL.Vue ，  
 执行npm install命令
 接着执行npm run dev 命令 【需要先运行后台Api】
+发布:接着执行npm run build命令 会在根目录自动生成dist静态文件夹，把dist发布到IIS,Nginx，均可
 
 后端使用 VS 2019 打开项目直接运行，或者进入路径  ../VOL.WebApi，找到dev_run.bat命令点击启动
 

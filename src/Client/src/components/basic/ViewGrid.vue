@@ -341,7 +341,7 @@ var vueParam = {
       viewModel: false, //查看表结构的弹出框
       viewColumns: [], //查看表结构的列数据
       viewData: [], //查看表结构信息
-      maxBtnLength: 3, //界面按钮最多显示的个数，超过的数量都显示在更多中
+      maxBtnLength: 6, //界面按钮最多显示的个数，超过的数量都显示在更多中
       buttons: [], //查询界面按钮  如需要其他操作按钮，可在表对应的.js中添加(如:Sys_User.js中buttons添加其他按钮)
       splitButtons: [],
       uploadfiled: [], //上传文件图片的字段
