@@ -35,6 +35,15 @@ namespace VOL.Entity.DomainModels
        public string CustomerName { get; set; }
 
        /// <summary>
+       ///店铺ID
+       /// </summary>
+       [Display(Name ="店铺ID")]
+       [MaxLength(100)]
+       [Column(TypeName="nvarchar(100)")]
+       [Editable(true)]
+       public string ShopId { get; set; }
+
+       /// <summary>
        ///店铺名称
        /// </summary>
        [Display(Name ="店铺名称")]
@@ -121,6 +130,13 @@ namespace VOL.Entity.DomainModels
        [Display(Name ="编辑人ID")]
        [Column(TypeName="int")]
        public int? ModifyID { get; set; }
+
+       /// <summary>
+       ///用户ID
+       /// </summary>
+       [Display(Name ="用户ID")]
+       [Column(TypeName="int")]
+       public int? User_Id { get; set; }
 
        
     }

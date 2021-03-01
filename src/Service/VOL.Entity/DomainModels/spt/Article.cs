@@ -47,8 +47,7 @@ namespace VOL.Entity.DomainModels
        ///内容
        /// </summary>
        [Display(Name ="内容")]
-       [MaxLength(1000)]
-       [Column(TypeName="nvarchar(1000)")]
+       [Column(TypeName="nvarchar(max)")]
        [Editable(true)]
        public string Contents { get; set; }
 

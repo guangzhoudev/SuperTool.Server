@@ -27,6 +27,7 @@
   <ItemGroup>
     <ProjectReference Include="..\VOL.Core\VOL.Core.csproj" />
     <ProjectReference Include="..\VOL.Entity\VOL.Entity.csproj" />
+    <ProjectReference Include="..\VOL.Order\VOL.Order.csproj" />
   </ItemGroup>
 
   <ItemGroup>

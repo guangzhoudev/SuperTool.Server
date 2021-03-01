@@ -28,9 +28,26 @@ namespace VOL.System.Controllers
     {
         [HttpPost, HttpGet, Route("login"), AllowAnonymous]
         [ObjectModelValidatorFilter(ValidatorModel.Login)]
-        public async Task<IActionResult> Login([FromBody]LoginInfo loginInfo)
+        public async Task<IActionResult> Login([FromBody] LoginInfo loginInfo)
         {
             return Json(await Service.Login(loginInfo));
+        }
+
+
+        [HttpPost, Route("GetUserAndShopAndAction"), AllowAnonymous]
+        public async Task<IActionResult> GetUserAndShopAndAction(int user_id)
+        {
+            return Json(await Service.GetUserAndShopAndAction(user_id));
+        }
+
+
+
+
+        [HttpPost, HttpGet, Route("loginNotValid"), AllowAnonymous]
+        [ObjectModelValidatorFilter(ValidatorModel.Login)]
+        public async Task<IActionResult> LoginNotValid([FromBody] LoginInfo loginInfo)
+        {
+            return Json(await Service.LoginNotValid(loginInfo));
         }
 
         [HttpPost, Route("replaceToken"), AllowAnonymous]
@@ -76,7 +93,7 @@ namespace VOL.System.Controllers
             repository.Update(user, x => new { x.UserPwd }, true);
             //如果用户在线，强制下线
             UserContext.Current.LogOut(user.User_Id);
-            return Json(webResponse.OK("密码修改成功")); 
+            return Json(webResponse.OK("密码修改成功"));
         }
 
         /// <summary>
@@ -95,5 +112,29 @@ namespace VOL.System.Controllers
             HttpContext.GetService<IMemoryCache>().Set(data.uuid.ToString(), code, new TimeSpan(0, 5, 0));
             return Json(data);
         }
+
+        ///// <summary>
+        ///// 推送消息
+        ///// </summary>
+        ///// <returns></returns>
+        //[HttpPost, AllowAnonymous, Route("SendMessage"),]
+        //public async Task<IActionResult> SendMessage()
+        //{
+        //    var client_result = await mqttClient.StartAsync(new Micro.Component.MQTT.ClientSettings()
+        //    {
+        //        Id = Guid.NewGuid().ToString(),
+        //        UserName = "Admin",
+        //        Password = "123"
+        //    });
+        //    mqttClient.MessageReceivedHander += (s) =>
+        //    {
+
+        //    };
+        //    await mqttClient.SendMessage("测试的假数据哟~~~");
+        //    return Json("推送成功");
+
+        //    // 支付  推送 定时任务(数据批量写入数据库)
+        //    // 支付： 提供一个方法   提供一个链接   接收result   然后继续处理后续业务， 最后推送MQTT到前端 展示给客户查看
+        //}
     }
 }

@@ -12,9 +12,9 @@ namespace VOL.Entity.DomainModels
     public class ApiSys_UserInput
     {
         /// <summary>
-       ///用户名
+       ///帐号
        /// </summary>
-       [Display(Name ="用户名")]
+       [Display(Name ="帐号")]
        [MaxLength(200)]
        [Column(TypeName="nvarchar(200)")]
        [Editable(true)]

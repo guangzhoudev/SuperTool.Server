@@ -161,6 +161,21 @@ namespace VOL.System.Services
             return menu.ToList();
         }
 
+
+        public async Task<object> GetMenuActionIEnumberable(int roleId)
+        {
+            var menu = await repository.FindAsync(x => roleId == roleId, a =>
+             new
+             {
+                 id = a.Menu_Id,
+                 MenuCaption = a.ParentId,
+                 MenuCode = a.OrderNo,
+                 MenuName = a.MenuName,
+                 MenuNameSpace = a.TableName,
+             });
+            return menu.ToList();
+        }
+
         /// <summary>
         /// 新建或编辑菜单
         /// </summary>

@@ -11,6 +11,7 @@ using VOL.Core.ManageUser;
 using VOL.Core.Services;
 using VOL.Core.Utilities;
 using VOL.Entity.DomainModels;
+using VOL.Order.Repositories;
 
 namespace VOL.System.Services
 {
@@ -42,6 +43,9 @@ namespace VOL.System.Services
             {
                 Sys_User user = await repository.FindAsIQueryable(x => x.UserName == loginInfo.UserName)
                     .FirstOrDefaultAsync();
+                // 审核
+                if (user.Enable != 1)
+                    return responseContent.Error(ResponseType.EnableError);
 
                 if (user == null || loginInfo.PassWord.Trim() != (user.UserPwd ?? "").DecryptDES(AppSetting.Secret.User))
                     return responseContent.Error(ResponseType.LoginError);
@@ -72,6 +76,90 @@ namespace VOL.System.Services
                 Logger.Info(LoggerType.Login, loginInfo.Serialize(), responseContent.Message, msg);
             }
         }
+
+        /// <summary>
+        /// 无验证码登陆
+        /// </summary>
+        /// <param name="loginInfo"></param>
+        /// <param name="verificationCode"></param>
+        /// <returns></returns>
+        public async Task<WebResponseContent> LoginNotValid(LoginInfo loginInfo)
+        {
+            string msg = string.Empty;
+            WebResponseContent responseContent = new WebResponseContent();
+            //   2020.06.12增加验证码
+            IMemoryCache memoryCache = HttpContext.Current.GetService<IMemoryCache>();
+            try
+            {
+                Sys_User user = await repository.FindAsIQueryable(x => x.UserName == loginInfo.UserName)
+                    .FirstOrDefaultAsync();
+                // 审核
+                if (user.Enable != 1)
+                    return responseContent.Error(ResponseType.EnableError);
+
+                if (user == null || loginInfo.PassWord.Trim() != (user.UserPwd ?? "").DecryptDES(AppSetting.Secret.User))
+                    return responseContent.Error(ResponseType.LoginError);
+
+                string token = JwtHelper.IssueJwt(new UserInfo()
+                {
+                    User_Id = user.User_Id,
+                    UserName = user.UserName,
+                    Role_Id = user.Role_Id
+                });
+                user.Token = token;
+                responseContent.Data = new { token, userName = user.UserTrueName, img = user.HeadImageUrl, user_Id = user.User_Id };
+                repository.Update(user, x => x.Token, true);
+                UserContext.Current.LogOut(user.User_Id);
+
+                loginInfo.PassWord = string.Empty;
+
+                return responseContent.OK(ResponseType.LoginSuccess);
+            }
+            catch (Exception ex)
+            {
+                msg = ex.Message + ex.StackTrace;
+                return responseContent.Error(ResponseType.ServerError);
+            }
+            finally
+            {
+                memoryCache.Remove(loginInfo.UUID);
+                Logger.Info(LoggerType.Login, loginInfo.Serialize(), responseContent.Message, msg);
+            }
+        }
+
+
+
+        public async Task<WebResponseContent> GetUserAndShopAndAction(int User_Id)
+        {
+            string msg = string.Empty;
+            WebResponseContent responseContent = new WebResponseContent();
+            //   2020.06.12增加验证码
+            try
+            {
+                Sys_User user = await repository.FindAsIQueryable(x => x.User_Id == User_Id).FirstOrDefaultAsync();
+
+                if (user == null) return responseContent.Error(ResponseType.KeyError);
+
+               var shoplist= ShopRepository.Instance.Find(s => s.User_Id == user.User_Id);
+                var rolelist =await Sys_MenuService.Instance.GetMenuActionIEnumberable(user.Role_Id);
+
+
+                responseContent.Data = new {user, store = shoplist,permisstion= rolelist };
+
+
+
+                return responseContent.OK(ResponseType.GetSuccess);
+            }
+            catch (Exception ex)
+            {
+                msg = ex.Message + ex.StackTrace;
+                return responseContent.Error(ResponseType.ServerError);
+            }
+        }
+
+
+
+
 
         /// <summary>
         ///当token将要过期时，提前置换一个新的token

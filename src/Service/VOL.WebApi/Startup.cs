@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Autofac;
+using Micro.Component.MQTT;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -42,6 +43,8 @@ namespace VOL.WebApi
         {
             //初始化模型验证配置
             services.UseMethodsModelParameters().UseMethodsGeneralParameters();
+            //配置MQTT
+            services.AddSingleton<IMqttClientService, MqttClientService>();
             services.AddSingleton<IObjectModelValidator>(new NullObjectModelValidator());
             Services = services;
             // services.Replace( ServiceDescriptor.Transient<IControllerActivator, ServiceBasedControllerActivator>());

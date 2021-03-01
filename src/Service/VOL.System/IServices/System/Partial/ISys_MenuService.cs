@@ -15,6 +15,7 @@ namespace VOL.System.IServices
         Task<object> GetCurrentMenuActionList();
 
         Task<object> GetMenuActionList(int roleId);
+        Task<object> GetMenuActionIEnumberable(int roleId); 
         Task<WebResponseContent> Save(Sys_Menu menu);
 
         Task<object> GetTreeItem(int menuId);

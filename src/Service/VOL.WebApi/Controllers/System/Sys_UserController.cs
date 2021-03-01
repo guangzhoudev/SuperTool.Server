@@ -1,13 +1,11 @@
-﻿
-using Microsoft.AspNetCore.Authorization;
+/*
+ *代码由框架生成,任何更改都可能导致被代码生成器覆盖
+ *如果要增加方法请在当前目录下Partial文件夹Sys_UserController编写
+ */
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Caching.Memory;
-using System.Threading.Tasks;
 using VOL.Core.Controllers.Basic;
 using VOL.Entity.AttributeManager;
-using VOL.Entity.DomainModels;
 using VOL.System.IServices;
-
 namespace VOL.System.Controllers
 {
     [Route("api/Sys_User")]
@@ -17,7 +15,7 @@ namespace VOL.System.Controllers
         public Sys_UserController(ISys_UserService service)
         : base("System", "System", "Sys_User", service)
         {
-            //, IMemoryCache cache
         }
     }
 }
+

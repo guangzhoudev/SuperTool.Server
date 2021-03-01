@@ -21,11 +21,13 @@ namespace VOL.Core.Enums
         OperSuccess,
         RegisterSuccess,
         ModifyPwdSuccess,
+        GetSuccess,
         EidtSuccess,
         DelSuccess,
         NoKey,
         NoKeyDel,
         KeyError,
-        Other
+        Other,
+        EnableError
     }
 }

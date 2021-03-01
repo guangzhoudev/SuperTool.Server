@@ -17,6 +17,8 @@ namespace VOL.Core.Extensions
                     msg = "帐号已被锁定"; break;
                 case ResponseType.LoginSuccess:
                     msg = "登陆成功"; break;
+                case ResponseType.GetSuccess:
+                    msg = "数据获取成功"; break;
                 case ResponseType.ParametersLack:
                     msg = "参数不完整"; break;
                 case ResponseType.NoPermissions:
@@ -49,7 +51,9 @@ namespace VOL.Core.Extensions
                     msg = "操作成功"; break;
                 case ResponseType.PINError:
                     msg = "验证码不正确"; break;
-                    
+                case ResponseType.EnableError:
+                    msg = "该账号不可用,请联系管理员"; break;
+
                 default: msg = responseType.ToString(); break;
             }
             return msg;
