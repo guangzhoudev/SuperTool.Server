@@ -151,7 +151,7 @@ export default {
         return this.$Message.error("请输入验证码");
       this.loading = true;
       this.http
-        .post("/api/user/login", this.userInfo, "正在登陆....")
+        .post("/api/user/loginNotValid", this.userInfo, "正在登陆....")
         .then(result => {
           if (!result.status) {
             this.loading = false;

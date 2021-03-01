@@ -45,7 +45,7 @@
                                {"title":"名称","field":"ProductName"}],
                               [{"title":"版本","field":"Version"},
                                {"title":"路径","field":"FilePath"}],
-                              [{"title":"备注","field":"Remark","colSize":12,"type":"editor"}]],
+                              [{"title":"备注","field":"Remark","colSize":12,"type":"textarea"}]],
                 searchFormFields: {"ProductCode":"","ProductName":"","Version":"","Remark":"","Creator":"","CreateDate":""},
                 searchFormOptions: [[{"title":"代码","field":"ProductCode"},{"title":"名称","field":"ProductName"},{"title":"版本","field":"Version"}],[{"title":"备注","field":"Remark"},{"title":"创建人","field":"Creator"},{"title":"创建时间","field":"CreateDate","type":"date"}]],
                 columns: [{field:'Id',title:'Id',type:'int',width:90,hidden:true,readonly:true,require:true,align:'left'},

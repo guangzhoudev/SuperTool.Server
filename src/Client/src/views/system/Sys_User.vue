@@ -6,11 +6,15 @@
  -->
 <template>
     <div>
-        <view-grid :columns="columns"
+        <view-grid
+                   ref="grid"
+                   :columns="columns"
                    :detail="detail"
-                   :editFormFileds="editFormFileds"
+                   :editFormFields="editFormFields"
+                   :editFormFileds="editFormFields"
                    :editFormOptions="editFormOptions"
-                   :searchFormFileds="searchFormFileds"
+                   :searchFormFields="searchFormFields"
+                   :searchFormFileds="searchFormFields"
                    :searchFormOptions="searchFormOptions"
                    :table="table"
                    :extend="extend">
@@ -36,19 +40,19 @@
                     sortName: "User_Id"
                 },
                 extend: extend,
-                editFormFileds: {"UserName":"","UserTrueName":"","Role_Id":"","IsRegregisterPhone":"","Gender":"","Enable":"","CreateDate":"","Creator":"","Remark":"","HeadImageUrl":""},
+                editFormFields: {"UserName":"","Role_Id":"","UserTrueName":"","Gender":"","IsRegregisterPhone":"","Enable":"","HeadImageUrl":"","CreateDate":"","Creator":"","Remark":""},
                 editFormOptions: [[{"title":"帐号","required":true,"field":"UserName","disabled":true},
+                               {"dataKey":"roles","data":[],"title":"角色","required":true,"field":"Role_Id","type":"select"},
                                {"title":"真实姓名","required":true,"field":"UserTrueName","type":"text"}],
-                              [{"dataKey":"roles","title":"角色","required":true,"field":"Role_Id","type":"drop"},
-                               {"dataKey":"isphone","title":"手机用户","required":true,"field":"IsRegregisterPhone","type":"drop"}],
-                              [{"dataKey":"gender","title":"性别","field":"Gender","type":"drop"},
-                               {"dataKey":"enable","title":"是否可用","required":true,"field":"Enable","type":"drop"}],
-                              [{"title":"注册时间","field":"CreateDate","disabled":true},
+                              [{"dataKey":"gender","data":[],"title":"性别","field":"Gender","type":"select"},
+                               {"dataKey":"isphone","data":[],"title":"手机用户","required":true,"field":"IsRegregisterPhone","type":"select"},
+                               {"dataKey":"enable","data":[],"title":"是否可用","required":true,"field":"Enable","type":"select"}],
+                              [{"title":"头像","field":"HeadImageUrl","type":"img"},
+                               {"title":"注册时间","field":"CreateDate","disabled":true},
                                {"title":"创建人","field":"Creator","disabled":true}],
-                              [{"title":"备注","field":"Remark","colSize":12,"type":"textarea"}],
-                              [{"title":"头像","field":"HeadImageUrl","type":"img"}]],
-                searchFormFileds: {"UserName":"","Gender":"","DeptName":"","Role_Id":"","Token":"","AppType":"","UserTrueName":"","CreateDate":"","IsRegregisterPhone":"","PhoneNo":"","Enable":"","LastLoginDate":"","Address":"","Email":""},
-                searchFormOptions: [[{"title":"帐号","field":"UserName"},{"dataKey":"gender","title":"性别","field":"Gender","type":"drop"},{"title":"真实姓名","field":"UserTrueName"}],[{"title":"部门","field":"DeptName"},{"dataKey":"roles","title":"角色","field":"Role_Id","type":"drop"},{"title":"Token","field":"Token"}],[{"dataKey":"ut","title":"登陆设备类型","field":"AppType","type":"dropList"},{"dataKey":"isphone","title":"手机用户","field":"IsRegregisterPhone","type":"drop"},{"title":"手机号","field":"PhoneNo"}],[{"dataKey":"enable","title":"是否可用","field":"Enable","type":"drop"},{"title":"地址","field":"Address"},{"title":"Email","field":"Email"}],[{"title":"注册时间","field":"CreateDate","type":"datetime"},{"title":"最后登陆时间","field":"LastLoginDate","type":"datetime"}]],
+                              [{"title":"备注","field":"Remark","colSize":12,"type":"textarea"}]],
+                searchFormFields: {"UserName":"","Gender":"","DeptName":"","Role_Id":"","Token":"","AppType":[],"UserTrueName":"","CreateDate":"","IsRegregisterPhone":"","PhoneNo":"","Enable":"","LastLoginDate":"","Address":"","Email":""},
+                searchFormOptions: [[{"title":"帐号","field":"UserName"},{"dataKey":"gender","data":[],"title":"性别","field":"Gender","type":"select"},{"title":"真实姓名","field":"UserTrueName"}],[{"title":"部门","field":"DeptName"},{"dataKey":"roles","data":[],"title":"角色","field":"Role_Id","type":"select"},{"title":"Token","field":"Token"}],[{"dataKey":"ut","data":[],"title":"登陆设备类型","field":"AppType","type":"selectList"},{"dataKey":"isphone","data":[],"title":"手机用户","field":"IsRegregisterPhone","type":"select"},{"title":"手机号","field":"PhoneNo"}],[{"dataKey":"enable","data":[],"title":"是否可用","field":"Enable","type":"select"},{"title":"地址","field":"Address"},{"title":"Email","field":"Email"}],[{"title":"注册时间","field":"CreateDate","type":"datetime"},{"title":"最后登陆时间","field":"LastLoginDate","type":"datetime"}]],
                 columns: [{field:'UserName',title:'帐号',type:'string',link:true,width:120,readonly:true,require:true,align:'left',sortable:true},
                        {field:'User_Id',title:'User_Id',type:'int',width:90,hidden:true,readonly:true,require:true,align:'left'},
                        {field:'Gender',title:'性别',type:'int',bind:{ key:'gender',data:[]},width:100,align:'left'},
@@ -79,12 +83,27 @@
                        {field:'Mobile',title:'电话',type:'string',width:140,hidden:true,align:'left'},
                        {field:'Email',title:'Email',type:'string',width:140,hidden:true,align:'left'},
                        {field:'Remark',title:'备注',type:'string',width:180,hidden:true,align:'left'},
-                       {field:'OrderNo',title:'排序号',type:'int',width:90,hidden:true,align:'left'}],
+                       {field:'OrderNo',title:'排序号',type:'int',width:90,hidden:true,align:'left'},
+                       {field:'Stores',title:'店铺清单',type:'string',width:220,hidden:true,align:'left'}],
                 detail: {
-                    cnName:"#detailCnName",
-                    columns: [],
-                    sortName: "",
-                    key:""
+                    cnName:"店铺管理",
+                    columns: [{field:'Id',title:'Id',type:'int',width:90,hidden:true,readonly:true,require:true,align:'left'},
+                       {field:'CustomerName',title:'公司名称',type:'string',width:120,edit:{type:''},align:'left',sortable:true},
+                       {field:'ShopId',title:'店铺ID',type:'string',width:120,edit:{type:''},align:'left'},
+                       {field:'ShopName',title:'店铺名称',type:'string',width:120,edit:{type:''},align:'left'},
+                       {field:'Contact',title:'联系人',type:'string',width:90,edit:{type:''},align:'left'},
+                       {field:'Type',title:'店铺类型',type:'string',width:90,edit:{type:''},align:'left'},
+                       {field:'BindTime',title:'绑定时间',type:'datetime',width:90,edit:{type:'datetime'},align:'left',sortable:true},
+                       {field:'Address',title:'店铺地址',type:'string',width:220,edit:{type:''},align:'left'},
+                       {field:'CreateID',title:'创建人ID',type:'int',width:80,hidden:true,align:'left'},
+                       {field:'CreateDate',title:'创建时间',type:'datetime',width:90,align:'left',sortable:true},
+                       {field:'Creator',title:'创建人',type:'string',width:130,align:'left'},
+                       {field:'ModifyDate',title:'编辑时间',type:'datetime',width:90,hidden:true,align:'left',sortable:true},
+                       {field:'Modifier',title:'编辑人',type:'string',width:130,hidden:true,align:'left'},
+                       {field:'ModifyID',title:'编辑人ID',type:'int',width:80,hidden:true,align:'left'},
+                       {field:'User_Id',title:'用户ID',type:'int',width:80,hidden:true,align:'left'}],
+                    sortName: "Id",
+                    key:"Id"
                 }
             };
         }

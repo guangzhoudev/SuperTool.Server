@@ -14,7 +14,7 @@ let extension = {
     buttons: [], //扩展的按钮
     methods: { //事件扩展
         onInit() {
-            this.boxOptions.height = 530;
+            this.boxOptions.height = 630;
             this.columns.push({
                 title: '操作',
                 fixed: 'right',
